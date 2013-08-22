@@ -1,18 +1,11 @@
-/*$(document).ready(function(){
-	
-		//Aligns content in the middle of the page.
-	$(window).resize(function(){
-	    $('.container').css({
-	        position:'absolute',
-	        left: ($(window).width() - $('.container').outerWidth())/2,
-	        top: ($(window).height() - $('.container').outerHeight())/2
-	    });
-	});
-
-	$(window).resize();
-});
-*/
 $(document).ready(function(){
+		$('#Question').click(function(){
+			for(var i=0; i < allQuestions.length; i++){
+				allQuestions.push(i);
+			}
+		});
+});
+
 //array of questions
 var allQuestions = [{question: "What does the \"AR\" in AR-15 stand for?"}, choices: ["Armalite Rifle","Aroused Rifle","Assult Rifle", "AR"], correctAnswer: 0},
 					{question: "What is the difference between an AR-15 and the military issued equivilant?", choices:["Faster Trigger","Full-Auto","Select Fire"], correctAnswer: 2},
@@ -25,4 +18,3 @@ var allQuestions = [{question: "What does the \"AR\" in AR-15 stand for?"}, choi
 					{question: "When was the first AR-15 made?", choices:["1955", "1957","1959","1961"], correctAnswer: 2},
 					{question: "What is the Military equivilant of the AR-15", choices:["M1","M4OA1","M16","M82"], correctAnswer: 2}]
 
-});
