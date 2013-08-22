@@ -100,3 +100,105 @@ Object.defineProperty(a, "length",
 				{writable: false});	//Make the length property read-only
 a.length = 0;						// a is unchanged
 
+// ------------------------------------------------------------------------------------------
+// 7.6 Iterating Arrays
+// ------------------------------------------------------------------------------------------
+
+// The most common way to loop through the elements of an array is with a for loop
+
+var keys = Object.keys(o);		//Get an array of property names for object o
+var values = []					// Store matching property values in this array
+for(var i=0; i< keys.length; i++) {		// For each index in the array
+	var key = keys[i];					// Get the key at that index
+	values[i] = o[key];					// Store the value in the values array
+}
+
+// In nested loops, or other contexts where performance is critical, you may sometimes
+// see this basic array iteration loop optimized so that the array length is only looked up once
+// rather than on each iteration:
+for(var i = 0, len = keys.length; i < len; i++){
+	var key = keys[i];
+	values[i] = o[key];	
+}
+
+// These examples assume that the array is dense and that all elements contain valid data.
+// If that is not the case, you should test the array elements before using them. If you want
+// to exclude null, undefined, and nonexistent elements, you can write this:
+for(var i = 0; i < a.length; i++) {
+	if (!a[i]) continure; // Skip null, undefined, and nonexistent elements
+	//loop body here
+}
+
+// If you only want to skip undefined and nonexistent elements, you might write:
+for(var i = 0; i < a.length; i++) {
+	if (a[i]) === undefined) continue; // Skip undefined + nonexistent elements
+	//loop body here
+}
+
+// Finally, if you only want to skip indexes for which no array element exists but still want to
+// handle existing undefined elements, do this:
+for(var i = 0; i < a.length; i++) {
+	if (!(i in a)) continue; // Skip nonexistent elements
+	// loop body here
+}
+
+// You can also use a for/in loop with sparse arrays. This loop assigns enumerable property
+// names (including array indexes) to the loop variable one at a time. Indexes that do not
+// exist will not be iterated:
+for(var index in sparseArray) {
+	var value = sparseArray[index];
+	// Now do something with index and value
+}
+
+// A for/in loop can return the names of inherited properties, such as the names of methods
+// that have been added to Array.prototype. For this reason you should not use a for/in loop on
+// on an array unless you include an additional test to filter out unwanted properties. You might
+// use either of these tests:
+for(var i in a) {
+	if (!a.hasOwnProperty(i)) continue; //Skip inherited properties
+	// loop body here
+}
+
+for(var i in a) {
+	// Skip i if it is not a non-negative integer
+	if (String(Math.floor(Math.abs(Number(i)))) !=== i) continue;
+}
+
+// ECMAScript5 defines a number of new methods for interating array elements by passing each one,
+// in index order, to a function that you define. The forEach() method is the most general of these
+// methods:
+
+var data = [1,2,3,4,5];				// This is the array we want to iterate
+var sumOfSquares = 0;				// We want to compute the sum of the squares of data
+data.forEach(function(x){			// Pass each element of data to this function
+	sumOfSquares += x*x;			// add up the squares
+});
+sumOfSquares						// => : 1+4+9+16+25
+
+// ------------------------------------------------------------------------------------------
+// 7.7 Multidementional Arrays
+// ------------------------------------------------------------------------------------------
+
+/*
+	JavaScript does not support true multidimensional arrays, but you can approximate them 
+	with arrays of arrays. To access a value in an array of arrays, simply use the [] operator
+	twice. For example, suppose the varible matrix is an array of arrays of numbers. Every element
+	in  martix[x] is an array of numbers. To access a particular number with in this array, you would
+	write matrix[x][y]. Here is a concrete example that uses a two-dimensional array as a multiplication
+	table
+*/
+
+//Create a multidimensional array
+var table = new Array(10); 		// 10 rows of the table
+for(var i = 0; i < table.length; i++)
+	table[i] = new Array(10);	// Each row has 10 columns
+
+//Initialize the array
+for(var row = 0; row < table.length; row++) {
+	for(col = 0; col < table[row].length; col++){
+		table[row][col] = row*col;
+	}
+}
+
+//Use the multidimensional array to compute 5*7
+var product = table[5][7]; // => 35
