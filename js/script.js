@@ -8,7 +8,7 @@ function Question (theQuestion, theChoices, theCorrectAnswer){
 	this.correctAnswer = theCorrectAnswer;
 }
 
-var question0 = new Question("What does the \"AR\" in AR-15 stand for?", ["Armalite Rifle","Aroused Rifle","Assult Rifle", "AR"], 0);
+var question0 = new Question("What does the \"AR\" in AR-15 stand for?", ["Armalite Rifle","Aroused Rifle","Assult Rifle", "Arkansas"], 0);
 var question1 = new Question("What is the difference between an AR-15 and the military issued equivilant?", ["Faster Trigger","Full-Auto","Select Fire"], 2);
 var question2 = new Question("What is the standard NATO cartridge of the AR-15", ["5.56","7.62",".223","9mm"], 0);
 var question3 = new Question("What part of the AR-15 is considered the \"gun\"?", ["Upper Reciever","Lower Reciever","Barrel","Trigger Assembly"], 1);
@@ -37,7 +37,7 @@ var allQuestions = [question0,question1,question2,question3,question4,question5,
 
 				//displays list of choices
 				for (var j = 0, ans = allQuestions[i].choices; j < ans.length; j++){
-						$('#Question').append("<br><input id='choices' type='radio' name='choice"+(j+1)+"' value='"+j+"'>"+ans[j]+"</input>");					
+						$('#Question').append("<br><input id='choices' type='radio' name='choice' value='"+j+"'>"+ans[j]+"</input>");					
 				}
 			}
 		}
