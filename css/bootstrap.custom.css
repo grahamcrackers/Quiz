@@ -1,8 +1,12 @@
 body {
 	margin: 0;
-	background: url(background.jpg) center center fixed;
+	/*background: url(background.jpg) center center fixed;*/
 }
 
 h1 {
 	color: #FF5F00;
+}
+
+body div div input {
+	background-color: white
 }
