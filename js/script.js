@@ -1,4 +1,5 @@
 $(document).ready(function(){
+"use strict";
 
 function Question (theQuestion, theChoices, theCorrectAnswer){
 	this.question = theQuestion;
@@ -22,43 +23,42 @@ var allQuestions = [question0,question1,question2,question3,question4,question5,
 //users score and position in array
 var score = 0;	
 var qCount = 0;
-//when user clicks a radio, assign value to selectedAnswer
-var selectedAnswer =  $("input:radio[name=choice]:checked").val();
+var cAns;
 
-    //create area for score to test for correct answer
-    $('#Next').after("<br><div id='Score'>"+score+"</div>");
+    //when user clicks a radio, assign value to selectedAnswer
+    var selectedAnswer;
+    $("input:radio[name='choice']").click(function(){
+        selectedAnswer = $('this').filter(':checked').val();
+        });
+
 
 	//On click, loop through array of objects to grab the question
 	$('#Next').click(function(){
+
 		//displays question of current object in the array
 		for(var i=0; i < allQuestions.length; i++){
 			if(qCount === i){
-				$('#Question').html(allQuestions[i].question + "<br>" + allQuestions[i].correctAnswer);
+				$('#Question').html(allQuestions[i].question + "<br><br> Answer:" + allQuestions[i].correctAnswer + " - Score:"+score+"<br>");
 
 				//displays list of choices for current object in the array
-				for (var j = 0, ans = allQuestions[i].choices; j < ans.length; j++){
-						$('#Question').append("<br><input id='choices' type='radio' name='choice' value='"+j+"'>"+ans[j]+"</input>");					
+				for (var j = 0, answers = allQuestions[i].choices; j < answers.length; j++){
+						$('#Question').append("<br><input id='choices' type='radio' name='choice' value='"+j+"'>"+answers[j]+"</input>");
 				}
 
-                //if selected answer is equal to correct answer, add 1
-                if(selectedAnswer === allQuestions[i].correctAnswer){
-                    score++;
-                }
-			}
+                cAns = allQuestions[i].correctAnswer;
+            }
 		}
+
+
         //Question count
 		qCount++;
 
+	});  //End $('Next').click
 
 
-		//create area for score to test for correct answer
-		$('#Score').replace(score);
-		
-		
-		
-	});
+        //if selected answer is equal to correct answer, add 1
+        if(selectedAnswer === cAns){
+            score++;
+        }
 
-
-
-	
-});
+}); //End Document
