@@ -38,6 +38,8 @@ var cAns;
 		//displays question of current object in the array
 		for(var i=0; i < allQuestions.length; i++){
 			if(qCount === i){
+
+                //Question
 				$('#Question').html(allQuestions[i].question + "<br><br> Answer:" + allQuestions[i].correctAnswer + " - Score:"+score+"<br>");
 
 				//displays list of choices for current object in the array
@@ -49,16 +51,19 @@ var cAns;
             }
 		}
 
-
         //Question count
 		qCount++;
+
+
+        //if selected answer is equal to correct answer, add 1
+        console.log("Now comparing your answer: " + selectedAnswer  + " to correct answer: " + cAns);
+        if(selectedAnswer === cAns){
+
+            score++;
+        }
 
 	});  //End $('Next').click
 
 
-        //if selected answer is equal to correct answer, add 1
-        if(selectedAnswer === cAns){
-            score++;
-        }
 
 }); //End Document
