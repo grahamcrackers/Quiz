@@ -20,7 +20,7 @@
     <option trailing="false" />
     <option asi="false" />
     <option boss="false" />
-    <option debug="false" />
+    <option debug="true" />
     <option eqnull="false" />
     <option es5="false" />
     <option esnext="false" />

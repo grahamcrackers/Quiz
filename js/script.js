@@ -24,46 +24,53 @@ var allQuestions = [question0,question1,question2,question3,question4,question5,
 var score = 0;	
 var qCount = 0;
 var cAns;
-
-    //when user clicks a radio, assign value to selectedAnswer
-    var selectedAnswer;
-    $("input:radio[name='choice']").click(function(){
-        selectedAnswer = $('this').filter(':checked').val();
-        });
+var selectedAnswer;
 
 
-	//On click, loop through array of objects to grab the question
-	$('#Next').click(function(){
+    //On click, loop through array of objects to grab the question
+    $('#Next').click(function(){
 
-		//displays question of current object in the array
-		for(var i=0; i < allQuestions.length; i++){
-			if(qCount === i){
+        //checks user input
+        selectedAnswer = $("input[name='choice']:checked").val();
+        console.log("Selected Answer: " + selectedAnswer);
 
-                //Question
-				$('#Question').html(allQuestions[i].question + "<br><br> Answer:" + allQuestions[i].correctAnswer + " - Score:"+score+"<br>");
-
-				//displays list of choices for current object in the array
-				for (var j = 0, answers = allQuestions[i].choices; j < answers.length; j++){
-						$('#Question').append("<br><input id='choices' type='radio' name='choice' value='"+j+"'>"+answers[j]+"</input>");
-				}
-
-                cAns = allQuestions[i].correctAnswer;
-            }
-		}
-
-        //Question count
-		qCount++;
-
+        //validation logic could be implemented like this
+        console.log($('#Selection').html());
+        if(selectedAnswer == null && $('#Selection').html().length > 0)
+        {
+            alert("Dude... pick an answer.");
+            return false;
+        }
 
         //if selected answer is equal to correct answer, add 1
         console.log("Now comparing your answer: " + selectedAnswer  + " to correct answer: " + cAns);
-        if(selectedAnswer === cAns){
-
+        if(selectedAnswer && selectedAnswer == cAns ){
+            //score will not update until next question with this logic
             score++;
         }
 
-	});  //End $('Next').click
+        $('#Selection').children('br').remove();
+        $('#Selection').children('label').remove();
 
+        //displays question of current object in the array
+        for(var i=0; i < allQuestions.length; i++){
+            if(qCount === i){
 
+                //Question
+                $('#Question').html(allQuestions[i].question + "<br><br> Answer:" + allQuestions[i].correctAnswer + " - Score:"+score+"<br>");
+
+                //displays list of choices for current object in the array
+                for (var j = 0, answers = allQuestions[i].choices; j < answers.length; j++){
+                    $('#Selection').append("<br><label><input id='choices' type='radio' name='choice' value='"+j+"'>"+answers[j]+"</input></label>");
+                }
+
+                cAns = allQuestions[i].correctAnswer;
+            }
+        }
+
+        //Question count
+        qCount++;
+
+    });  //End $('Next').click
 
 }); //End Document
