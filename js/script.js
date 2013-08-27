@@ -49,15 +49,15 @@ var selectedAnswer;
             score++;
         }
 
-        $('#Selection').children('br').remove();
-        $('#Selection').children('label').remove();
+        $('#Selection').children().remove();
 
         //displays question of current object in the array
         for(var i=0; i < allQuestions.length; i++){
             if(qCount === i){
 
                 //Question
-                $('#Question').html(allQuestions[i].question + "<br><br> Answer:" + allQuestions[i].correctAnswer + " - Score:"+score+"<br>");
+                $('#Question').html(allQuestions[i].question //+ "<br><br> Answer:" + allQuestions[i].correctAnswer + " - Score:"+score+"<br>"
+                 );
 
                 //displays list of choices for current object in the array
                 for (var j = 0, answers = allQuestions[i].choices; j < answers.length; j++){
@@ -65,6 +65,7 @@ var selectedAnswer;
                 }
 
                 cAns = allQuestions[i].correctAnswer;
+                console.log("Now deleting question object in array position"+allQuestions[i]);
             }
         }
 
