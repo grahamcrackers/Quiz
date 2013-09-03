@@ -68,9 +68,13 @@ var selectedAnswer;
                 console.log("Now deleting question object in array position"+allQuestions[i]);
             }
         }
-
         //Question count
         qCount++;
+
+        if(qCount > 10){
+            $('#Question').html("Your final score is " + score+"/10");
+            $('#Next').remove();
+        }
 
     });  //End $('Next').click
 
