@@ -27,8 +27,11 @@ var cAns;
 var selectedAnswer;
 
 
+
     //On click, loop through array of objects to grab the question
     $('#Next').click(function(){
+
+        $('#Question').fadeIn('slow');
 
         //checks user input
         selectedAnswer = $("input[name='choice']:checked").val();
@@ -56,8 +59,8 @@ var selectedAnswer;
             if(qCount === i){
 
                 //Question
-                $('#Question').html(allQuestions[i].question //+ "<br><br> Answer:" + allQuestions[i].correctAnswer + " - Score:"+score+"<br>"
-                 );
+                $('#Question').html(allQuestions[i].question).fadeIn();
+                console.log("Answer to the question is :" + allQuestions[i].correctAnswer + " - Score:"+score+"<br>");
 
                 //displays list of choices for current object in the array
                 for (var j = 0, answers = allQuestions[i].choices; j < answers.length; j++){
