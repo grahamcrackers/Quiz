@@ -1,0 +1,14 @@
+{
+"allQuestions": [
+{"question":"What does the \"AR\" in AR-15 stand for?", "choices":["Armalite Rifle","Aroused Rifle","Assault Rifle", "Arkansas"], "answer":0},
+{"question":"What is the difference between an AR-15 and the military issued equivalent?", "choices":["Faster Trigger","Full-Auto","Select Fire"], "answer":2},
+{"question":"What is the standard NATO cartridge of the AR-15", "choices":["5.56","7.62",".223","9mm"], "answer":0},
+{"question":"What part of the AR-15 is considered the \"gun\"?", "choices":["Upper Receiver","Lower Receiver","Barrel","Trigger Assembly"], "answer":1},
+{"question":"What is the minimum barrel length to comply with the NFA regulations to maintain non-NFA classification?", "choices":["15\"","16\"","16.5\"","17"], "answer":1},
+{"question":"Is the AR-15 an \"Assault Rifle\"?", "choices":["Yes","No"], "answer":1},
+{"question":"What device holds the cartridges that are fed into the weapon system?", "choices":["Holder","Gat","Clip","Magazine"], "answer":3},
+{"question":"Who created the AR-15", "choices":["Eugene Stoner","Ronnie Barrett","Max Atchisson","Mikhail Kalashnikov"], "answer":0},
+{"question":"When was the first AR-15 made?", "choices":["1957","1958","1959","1960"], "answer":2},
+{"question":"What is the Military equivalent of the AR-15", "choices":["M1","M4OA1","M16","M82"], "answer":2}
+]
+}
