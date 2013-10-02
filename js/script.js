@@ -7,6 +7,24 @@ function Question (theQuestion, theChoices, theCorrectAnswer){
 	this.correctAnswer = theCorrectAnswer;
 }
 
+function getQuestion() {
+    for(var i=0; i < allQuestions.length; i++){
+            if(qCount === i){
+
+                //Question
+                $('#Question').html(allQuestions[i].question);
+                console.log("Answer to the question is :" + allQuestions[i].correctAnswer + " - Score:"+score);
+
+                //displays list of choices for current object in the array
+                for (var j = 0, answers = allQuestions[i].choices; j < answers.length; j++){
+                    $('#Selection').append("<br><label><input id='choices' type='radio' name='choice' value='"+j+"'>"+answers[j]+"</input></label>");
+                }
+
+                cAns = allQuestions[i].correctAnswer;
+            }
+        }
+}
+
 var question0 = new Question("What does the \"AR\" in AR-15 stand for?", ["Armalite Rifle","Aroused Rifle","Assault Rifle", "Arkansas"], 0);
 var question1 = new Question("What is the difference between an AR-15 and the military issued equivalent?", ["Faster Trigger","Full-Auto","Select Fire"], 2);
 var question2 = new Question("What is the standard NATO cartridge of the AR-15", ["5.56","7.62",".223","9mm"], 0);
@@ -18,22 +36,20 @@ var question7 = new Question("Who created the AR-15", ["Eugene Stoner","Ronnie B
 var question8 = new Question("When was the first AR-15 made?", ["1957","1958","1959","1960"], 2);
 var question9 = new Question("What is the Military equivalent of the AR-15", ["M1","M4OA1","M16","M82"], 2);
 //array of questions
-var allQuestions; //= [question0,question1,question2,question3,question4,question5,question6,question7,question8,question9];
+var allQuestions = [question0,question1,question2,question3,question4,question5,question6,question7,question8,question9];
 
 //users score and position in array
 var score = 0;	
 var qCount = 0;
 var cAns;
 var selectedAnswer;
+var userAnswers = [];
 
 
-$.parseJSON('data/questions.json', function(data){
-    $.each(data.questions, function(key, value))
-});
 
 
     //On click, loop through array of objects to grab the question
-    $('#Next').click(function(){
+    $('#Next').on('click', function(){
 
         //$('#Question').fadeIn('slow');
 
@@ -42,7 +58,6 @@ $.parseJSON('data/questions.json', function(data){
         console.log("Selected Answer: " + selectedAnswer);
 
         //validation logic could be implemented like this
-        console.log($('#Selection').html());
         if(selectedAnswer == null && $('#Selection').html().length > 0)
         {
             alert("Dude... pick an answer.");
@@ -56,34 +71,30 @@ $.parseJSON('data/questions.json', function(data){
             score++;
         }
 
+
         $('#Selection').children().remove();
 
-
         //displays question of current object in the array
-        /*for(var i=0; i < allQuestions.length; i++){
-            if(qCount === i){
+        getQuestion();
 
-                //Question
-                $('#Question').html(allQuestions[i].question).fadeIn();
-                console.log("Answer to the question is :" + allQuestions[i].correctAnswer + " - Score:"+score+"<br>");
-
-                //displays list of choices for current object in the array
-                for (var j = 0, answers = allQuestions[i].choices; j < answers.length; j++){
-                    $('#Selection').append("<br><label><input id='choices' type='radio' name='choice' value='"+j+"'>"+answers[j]+"</input></label>");
-                }
-
-                cAns = allQuestions[i].correctAnswer;
-                console.log("Now deleting question object in array position"+allQuestions[i]);
-            }
-        }*/
         //Question count
         qCount++;
 
-        if(qCount > 10){
+        if(qCount === 2){
+            $('#Selection').after("<button id='Back' class='btn btn-success'> Back </button>")
+        } else if (qCount > 10){
             $('#Question').html("Your final score is " + score+"/10");
             $('#Next').remove();
+            $('#Back').remove();
         }
-
+        console.log("Question Count: "+qCount);
     });  //End $('Next').click
+
+    $('.container').on('click', '#Back', function(){
+        qCount--;
+        $('#Selection').children().remove();
+        getQuestion();
+        console.log("Question Count: "+qCount);
+    }); //End $('#Back').click
 
 }); //End Document
