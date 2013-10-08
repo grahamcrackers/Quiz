@@ -17,12 +17,12 @@ function getQuestion() {
     for(var i=0; i < allQuestions.length; i++){
 
             if(qCount === i){
-                $('#Question').html("<h1>"+allQuestions[i].question+"</h1>").fadeIn();
+                $('#Question').html("<h1>"+allQuestions[i].question+"</h1>");
                 //console.log("Answer to the question is :" + allQuestions[i].correctAnswer + " - Score:"+score);
 
                 //displays list of choices for current object in the array
                 for (var j = 0, answers = allQuestions[i].choices; j < answers.length; j++){
-                    $('#Selection').append("<br><label><input id='choices' type='radio' name='choice' value='"+j+"'>"+answers[j]+"</input></label>");
+                    $('#Selection').append("<br><label><input id='choice"+j+"' type='radio' name='choice' class='choice' value='"+j+"'>"+answers[j]+"</input></label>");
                 }
 
                 currentChoices = allQuestions[i].choices;
@@ -33,16 +33,23 @@ function getQuestion() {
 }
 
 
+function showQuestion() {
+    //removes answers before next question is loaded
+    $('#Selection').children().remove();
+    getQuestion();
+}
+
 
 //users score and position in array
 var score = 0;	
-var qCount;
+var qCount = 0;
 var cAns;
 var selectedAnswer;
 var allQuestions = [];
 var currentQuestion;
 var currentChoices = [];
 var userAnswers = [];
+
 
 //grab each question from JSON data and put it into global array allQuestions
 $.getJSON('data/questions.json', function(json){
@@ -56,33 +63,32 @@ $.getJSON('data/questions.json', function(json){
 });
 
 
-
     //On click, loop through array of objects to grab the question
     $('.container').on('click', '#Next', function(){
 
+        //checks user input
+        selectedAnswer = $("input[name='choice']:checked").val();
+        console.log("Selected Answer: " + selectedAnswer);
+
         $('#Question').fadeOut( function (){
 
-            //checks user input
-            selectedAnswer = $("input[name='choice']:checked").val();
-            //console.log("Selected Answer: " + selectedAnswer);
-
+            $('#Question').fadeIn();
 
             //validation logic could be implemented like this
             if(selectedAnswer == null && $('#Selection').html().length > 0)
             {
                 alert("Dude... pick an answer.");
                 return false;
-            } else if ($('#Selection').html().length === 0) {
+            } if ($('#Selection').html().length === 0) {
                 qCount = 0
-            } else {
-                
-                $('#Question').fadeIn();
-                userAnswers.push(selectedAnswer);
+            }else {
+
+                userAnswers[qCount] = selectedAnswer;
                 qCount++;
             }
 
-            if(userAnswers != undefined){
-            console.log("User Answers: "+userAnswers.join(""));
+            if(userAnswers != null){
+            console.log("User Answers: "+userAnswers.join());
             };
 
             //if selected answer is equal to correct answer, add 1
@@ -92,18 +98,14 @@ $.getJSON('data/questions.json', function(json){
                 score++;
             } 
 
-            //removes answers before next question is loaded
-            $('#Selection').children().remove();
-
             //displays question of current object in the array
-            getQuestion();
-
-            
-
+            showQuestion();
+ 
+            //will insert a back button after the first question
             if(qCount === 1){
                 $('#Selection').after("<button id='Back' class='btn btn-success'> Back </button>");
-            }else if (qCount > allQuestions.length){
-                $('#Question').html("Your final score is: "+score+"/"+allQuestions.length);
+            }else if (qCount >= allQuestions.length){
+                $('#Question').html("<h1>Your final score is: "+score+"/"+allQuestions.length+"</h1>");
                 $('#Next').remove();
                 $('#Back').remove();
             }
@@ -115,27 +117,44 @@ $.getJSON('data/questions.json', function(json){
     });  //End $('Next').click
 
     
+    
     $('.container').on('click', '#Back', function(){
         
         $('#Question').fadeOut(function(){
             
-            //reduce question count
+            $('#Question').fadeIn();
+            
             qCount--;
+
+            showQuestion();
             
-            $('#Selection').children().remove();
             
-            getQuestion();
+            //for (var i=0; i<userAnswers.length; i++){
+                //if (qCount === i){
+                    $.each($('.choice'),function(){
+                    console.log(this.val());
+                });
+                    //if ($("input[name='choice']").val() === userAnswers[i]){
+                            //alert($("input[name='choice']").val());
+                            //$('choice').attr('checked', true);
+                        //}
+                    
+                   // }
+                //}
             
+            
+
             console.log("Question Count: "+qCount);
 
             if (qCount < 1){
                 $('#Back').remove();
             }
 
-            $('#Question').fadeIn();
+            
 
         });
     
     }); //End $('#Back').click
+
     
 }); //End Document
